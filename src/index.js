@@ -15,11 +15,13 @@ const divEl = document.querySelector(".country-info");
 
 
 inputEl.addEventListener("input", debounce(event => {
-    const country = event.target.value;
+    const country = event.target.value.trim();
     if (country !== "") {
        fetchCountries(country).then(countries => {
         if (countries.length > 10) {
             Notify.warning("Too many matches found. Please enter a more specific name.");
+            divEl.innerHTML = "";
+            ulEl.innerHTML = "";
         } else if (countries.length > 1) {
         const template = countries.map(item => {
             return `<li><img src='${item.flags.svg}'/><h2>${item.name.official}</h2></li>`
